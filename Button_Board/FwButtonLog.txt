@@ -1,4 +1,5 @@
-﻿14/6/2018
+﻿Chỉnh sửa file log
+14/6/2018
 - Add wifi stack
 - Add IOInput (C++) lib. Xem hướng dẫn ở fie .h
 - Add web config wifi. chỉ test chứ chưa đưa vào ứng dụng cụ thể
