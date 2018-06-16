@@ -1,0 +1,33 @@
+﻿14/6/2018
+- Add wifi stack
+- Add IOInput (C++) lib. Xem hướng dẫn ở fie .h
+- Add web config wifi. chỉ test chứ chưa đưa vào ứng dụng cụ thể
+- Bt_EspNow.ino chạy chương trình chính cho thiết bị khi ở espnow Mode
+- Factory.ino chạy chương trình factory thông số wifi khi cần thiết
+- FileConfig.h khởi động các thống số bộ nhớ cho wifi. Bộ nhớ dùn SPIFFS lib
+
+Trạng thái blink led của nút nhấn:
+Chế độ EspNow:
+- Nếu nút nhấn OFF: on 100ms, off 4900ms
+- Nếu nút nhấn ON: on 100ms, off 400ms
+Chế độ Wifi:
+- on 100ms, off 100ms
+
+Cách on wifi:
+  B1. Rút nguồn thiết bị
+  B2. Nhẫn giữ nút nhấn
+  B3. Cắm nguồn thiết bị và vẫn giữ nút nhấn
+  B4. Đếm Led nút nhấn nháy 5 lần (tương ứng 5s) thì nhả nút nhấn ra
+  B5. Thiết bị sẽ phát ra wifi có tên "THES CO.,LTD BTxxxxxx", xxxxxx là 3 byte cuối địa chỉ mac của thiết bị
+
+Cách sử dụng nút SOS:
+- Khi nhấn nút SOS (GPIO5) từ 2s, thiết bị sẽ cập nhật trạng thái nút nhấn "ON" vào bít "BUTTON._INFO._BIT.Stt"
+và gửi ngay lập tức trạng thái "ON" về cho bộ trung gian.
+- Khi nhả nút nhấn từ 200ms, thiết bị sẽ cập nhật trạng thái nút nhấn "OFF" vào bít "BUTTON._INFO._BIT.Stt"
+và gửi ngay lập tức trạng thái "OFF" về cho bộ trung gian.
+- Nếu không có thay đổi trạng thái nút nhấn. Định kì 1s-2s thiết bị sẽ gửi trạng thái "ON/OFF" của nút nhấn về 
+cho bộ trung gian.
+- Thời gian (s) trạng thái hiện tại của nút nhấn "BUTTON._INFO.Time = _IoCustomer.GetTime(BUTTON._INFO._BIT.Stt)/1000;"
+
+Format dữ liệu: 4byte
+"<1 uint16_t><8 bit><1 uint8_t>" <-----> "<Thời gian trạng thái nút nhấn><trạng thái nút nhấn><Dự phòng>"
