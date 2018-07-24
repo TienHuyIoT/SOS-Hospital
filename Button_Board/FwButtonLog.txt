@@ -5,7 +5,7 @@
 - Add web config wifi. chỉ test chứ chưa đưa vào ứng dụng cụ thể
 - Bt_EspNow.ino chạy chương trình chính cho thiết bị khi ở espnow Mode
 - Factory.ino chạy chương trình factory thông số wifi khi cần thiết
-- FileConfig.h khởi động các thống số bộ nhớ cho wifi. Bộ nhớ dùn SPIFFS lib
+- FileConfig.h khởi động các thông số bộ nhớ cho wifi. Bộ nhớ dùng SPIFFS lib
 
 Trạng thái blink led của nút nhấn:
 Chế độ EspNow:
@@ -22,9 +22,9 @@ Cách on wifi:
   B5. Thiết bị sẽ phát ra wifi có tên "THES CO.,LTD BTxxxxxx", xxxxxx là 3 byte cuối địa chỉ mac của thiết bị
 
 Cách sử dụng nút SOS:
-- Khi nhấn nút SOS (GPIO5) từ 2s, thiết bị sẽ cập nhật trạng thái nút nhấn "ON" vào bít "BUTTON._INFO._BIT.Stt"
+- Khi nhấn nút SOS (GPIO5) từ 2s, thiết bị sẽ cập nhật trạng thái nút nhấn "ON" vào Bit "BUTTON._INFO._BIT.Stt"
 và gửi ngay lập tức trạng thái "ON" về cho bộ trung gian.
-- Khi nhả nút nhấn từ 200ms, thiết bị sẽ cập nhật trạng thái nút nhấn "OFF" vào bít "BUTTON._INFO._BIT.Stt"
+- Khi nhả nút nhấn từ 200ms, thiết bị sẽ cập nhật trạng thái nút nhấn "OFF" vào Bit "BUTTON._INFO._BIT.Stt"
 và gửi ngay lập tức trạng thái "OFF" về cho bộ trung gian.
 - Nếu không có thay đổi trạng thái nút nhấn. Định kì 1s-2s thiết bị sẽ gửi trạng thái "ON/OFF" của nút nhấn về 
 cho bộ trung gian.
