@@ -3,7 +3,7 @@
 #include "IOInput.h"
 
 #define IOINPUT_PORT Serial
-#define IOINPUT_DBG(fmt, ...) IOINPUT_PORT.printf("\r\n>IOINPUT< " fmt, ##__VA_ARGS__)
+#define IOINPUT_DBG(fmt, ...) //IOINPUT_PORT.printf("\r\n>IOINPUT< " fmt, ##__VA_ARGS__)
 
 IOInput::IOInput(short _IO, uint8_t Lever, uint16_t S_To, uint16_t H_Cnt, uint16_t L_Cnt)
     : ToE(100), _IOPIN(_IO), flagInput(Lever), SampleTo(S_To), SampleHigh(H_Cnt), SampleLow(L_Cnt)

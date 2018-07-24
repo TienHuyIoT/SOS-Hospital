@@ -2,13 +2,6 @@
 #include <stdint.h>
 #include "IOBlink.h"
 
-/*
-  Cach su dung 2 ham la nhu nhau.
-
-  TimeOutEvent::ToEUpdate(IoBDelayOn);
-  ToEUpdate(IoBDelayOn);
-*/
-
 IOBlink::IOBlink(short _IO, bool Lever)
   : _IOPIN(_IO), On_Status(Lever), TimeOutEvent(500)
 {

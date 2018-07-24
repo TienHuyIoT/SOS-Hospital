@@ -1,6 +1,11 @@
 #define WIFI_PORT Serial
 #define WIFI_DEBUG(fmt, ...) WIFI_PORT.printf("\r\n>Wifi Config< " fmt, ##__VA_ARGS__)
 
+/*
+Serial.print(WiFi.BSSIDstr(i));
+      Serial.print(WiFi.BSSID(i));
+*/
+
 const char * FwVersion = "Firmware V1.0";
 const char * HwVersion = "Hardware V1.0";
 

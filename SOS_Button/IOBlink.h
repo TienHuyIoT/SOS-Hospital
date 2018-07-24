@@ -25,30 +25,6 @@ void loop() {
 #define TaskIoBOn                  2
 #define TaskIoBOff                 3
 
-/*
-Trong C++
-
-- Cach su dung ham class B trong class D
-- Link hay hoc C++ cap cao
-- http://vietjack.com/cplusplus/tinh_ke_thua_trong_cplusplus.jsp
-
-file .h
-class D : public B, public B, public ...{
-};
-class D : B, C, ...{	
-};
-file .cpp
-D::D()
-:B
-{}
-
-
-- Su khac biet giua co public va khong public: 
-- https://stackoverflow.com/questions/1563765/use-of-public-in-a-derived-class-declaration
-- Neu co public thi D thua huong tat ca cua B. Nghia la B khai bao sao thi D nhu vay
-- Neu khong co public thi B se tro nen private cua D
-
-*/
 class IOBlink : public TimeOutEvent {
 public:
 	IOBlink(short _IO = 2, bool Lever = LOW);

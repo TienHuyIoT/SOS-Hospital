@@ -25,7 +25,7 @@ void loop() {
 
 class TimeOutEvent {
 public:
-	TimeOutEvent(uint32_t Tio);
+	TimeOutEvent(uint32_t Tio = 0);
 	void ToEUpdate(uint32_t Tio);
 	bool ToEExpired(void);
   void ToEDisable(void); 

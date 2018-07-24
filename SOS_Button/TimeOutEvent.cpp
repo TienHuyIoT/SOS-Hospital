@@ -1,7 +1,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include "TimeOutEvent.h"
-TimeOutEvent::TimeOutEvent(uint32_t Tio = 500)
+TimeOutEvent::TimeOutEvent(uint32_t Tio)
 {
   ToEUpdate(Tio);
   /*Nếu khởi động timeout = 0 thì mặc định disable*/

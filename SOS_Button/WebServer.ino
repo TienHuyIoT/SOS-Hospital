@@ -100,6 +100,25 @@ void WebServerInit(void) {
       server.send(200, "text/html", "Vaule: " + String(ActivateByMac));
     }
   });
+
+  /*=================================================================
+    
+    =================================================================*/
+  server.on("/SetMac",HTTP_POST, []() {
+    if (!WebAuthCheck(ConfigFile.AUTH.user, ConfigFile.AUTH.pass)) return;
+    if (server.argName(0) != "Pass" || server.arg(0)!=ConfigFileHidden.MAC.Auth){
+      server.send(200, "text/json", "{\"St\":\"Lỗi Pass\"}");
+      return;           
+    }
+    if (server.argName(1) == "Ssid" && server.argName(2)=="Mac"){
+      strncpy(ConfigFile.PEER.ssid,server.arg(1).c_str(),Df_LengSsidPeer); 
+      strncpy(ConfigFile.PEER.Mac,server.arg(2).c_str(),Df_LengMacPeer);
+      FS_FileConfig(Df_UpdateConfig); //Update file config
+      server.send(200, "text/html", "Lưu Mac " + server.arg(2) + " thành công"); 
+    }else{
+      server.send(200, "text/json", "{\"St\":\"Lỗi Json\"}");
+    }  
+  });
   
   /*=================================================================
     Called when the url is not defined here

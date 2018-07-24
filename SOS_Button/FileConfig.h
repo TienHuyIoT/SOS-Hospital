@@ -66,12 +66,18 @@ void FsFormat(void) {
 #define Df_LengPass           64
 #define Df_LengAuth           10
 #define Df_LengAddr           100
+#define Df_LengSsidPeer       32
+#define Df_LengMacPeer        17
 typedef struct{
 	uint32_t 		Adr;          /*Địa chỉ Node thiết bị*/
   uint16_t    DisTo;        /*Thời gian gửi dữ liệu qua web socket*/
 	uint16_t 		UDPPort;      /*UDP Port*/
 	uint16_t 		TCPPort;      /*TCP Port*/
   uint16_t    WSPort;       /*Websocket Port*/
+  struct{
+    char    ssid[Df_LengSsidPeer + 1];  /* Wifi Peer */
+    char    Mac[Df_LengMacPeer + 1];  /* Địa chỉ mac peer*/
+  }PEER;
   struct{
     char    Name[Df_LengAddr + 1];  /* Tên thiết bị */
     char    Addr[Df_LengAddr + 1];  /* Địa chỉ lắp đặt thiết bị*/
@@ -107,6 +113,8 @@ CONFIGFILE ConfigFile;
 #define ParthConfig		"/config.txt"
 const char* ConfigFileInit =
 "{\"I2CDeveice\":2,"
+"\n\"SsidPeer\":\"TienHuy\","
+"\n\"MacPeer\":\"00:00:00:00:00:00\","
 "\n\"NameDev\":\"NÚT NHẤN GỌI Y TÁ\","
 "\n\"AddrDev\":\"200 Cộng Hòa, Phường 15, Quận Tân Bình, Tp HCM\","
 "\n\"DisTo\":150,"  
@@ -144,6 +152,8 @@ void FS_FileConfig(uint8_t Cmd) {
     JsonObject& root = djbco.createObject();
     root["NameDev"] = ConfigFile.ADDR.Name;
     root["AddrDev"] = ConfigFile.ADDR.Addr;
+    root["SsidPeer"] = ConfigFile.PEER.ssid;
+    root["MacPeer"] = ConfigFile.PEER.Mac;
     root["I2CDeveice"] = ConfigFile.Adr;
     root["DisTo"] = ConfigFile.DisTo;
     root["UDPPort"] = ConfigFile.UDPPort;
@@ -185,8 +195,11 @@ void FS_FileConfig(uint8_t Cmd) {
     DEBUGLOG_FS("JSON parsing failed!");
     return;
   }
+  DEBUGLOG_FS("JSON parsing OK!");
   strncpy(ConfigFile.ADDR.Name,root["NameDev"],Df_LengAddr); 
   strncpy(ConfigFile.ADDR.Addr,root["AddrDev"],Df_LengAddr);
+  strncpy(ConfigFile.PEER.ssid,root["SsidPeer"],Df_LengSsidPeer); 
+  strncpy(ConfigFile.PEER.Mac,root["MacPeer"],Df_LengMacPeer);
   ConfigFile.DisTo = root["DisTo"];
   ConfigFile.Adr = root["I2CDeveice"];
 	ConfigFile.UDPPort = root["UDPPort"];
@@ -217,18 +230,18 @@ void FS_FileConfig(uint8_t Cmd) {
 	ConfigFile.AP.Hidden = root["Hidden"];  	 
 }
 
-#define Df_LengAdAuth          10
+#define Df_LengMacAuth          10
 typedef struct{ 
   struct{   
-    char    Auth[Df_LengAdAuth + 1];
-  }PU3;  
+    char    Auth[Df_LengMacAuth + 1];
+  }MAC;  
 }CONFIGFILEHIDDEN;
 CONFIGFILEHIDDEN ConfigFileHidden;
 #define Df_ReadConfigHidden     0
 #define Df_UpdateConfigHidden   1
 #define ParthConfigHidden   "/confighidden.txt"
 const char* ConfigHiddenFileInit =
-"{\"AdAuth\":\"1234\","
+"{\"MacAuth\":\"1234\","
 "\n\"NC\":0}";
 
 void FS_FileConfigHidden(uint8_t Cmd) {
@@ -242,7 +255,7 @@ void FS_FileConfigHidden(uint8_t Cmd) {
   if (Cmd == Df_UpdateConfigHidden) {
     DynamicJsonBuffer djbco;
     JsonObject& root = djbco.createObject();
-    root["AdAuth"] = ConfigFileHidden.PU3.Auth;
+    root["MacAuth"] = ConfigFileHidden.MAC.Auth;
     root["NC"] = 0;     
     Fs_Config = SPIFFS.open(ParthConfigHidden, "w");
     root.prettyPrintTo(Fs_Config);
@@ -262,7 +275,7 @@ void FS_FileConfigHidden(uint8_t Cmd) {
     DEBUGLOG_FS("JSON parsing failed!");
     return;
   }
-  strncpy(ConfigFileHidden.PU3.Auth,root["AdAuth"],Df_LengAdAuth);    
+  strncpy(ConfigFileHidden.MAC.Auth,root["MacAuth"],Df_LengMacAuth);    
 }
 
 /*=================================================================
